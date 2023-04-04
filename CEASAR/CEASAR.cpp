@@ -1,33 +1,28 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 
 using namespace std;
 
-string ceasar(string text, int shift)
-{
-    string result = "";
-    for (int i = 0; i < text.length(); i++)
-    {
-        if (isalpha(text[i]))
-        {
-            char c = isupper(text[i]) ? 'A' : 'a';
-            result += (char)(((text[i] + shift) - c) % 26 + c);
+string caesarDecrypt(string ciphertext, int key) { //метод расшифровка
+    string plaintext = "";//строка дял результата
+    for (char c : ciphertext) {//цикл по тексту
+        if (isalpha(c)) {//проверка на символ или нет
+            char shift = isupper(c) ? 'A' : 'a';//проверка на заглавную букву 
+            plaintext += (c - shift - key + 26) % 26 + shift;//формула для расшифровка
         }
-        else
-        {
-            result += text[i];
+        else {
+            plaintext += c;
         }
     }
-    return result;
+    return plaintext;
 }
 
-int main()
-{
-    string message = "Olssv dvysk. P ht h zwhilthu. Tllapun dpss il ha aol tvyupun.";
-    int shift = 7;
-    string encrypted_message = ceasar(message, shift);
-    cout << "Зашифроване повідомлення: " << encrypted_message << endl;
-    string decrypted_message = ceasar(encrypted_message, -shift);
-    cout << "Розшифроване повідомлення: " << decrypted_message << endl;
+int main() {
+    string ciphertext = "Olssv dvysk. P ht h zwhilthu. Tllapun dpss il ha aol tvyupun";
+    int key = 7;
+
+    string plaintext = caesarDecrypt(ciphertext, key);
+    cout << plaintext << endl;
+
     return 0;
 }
